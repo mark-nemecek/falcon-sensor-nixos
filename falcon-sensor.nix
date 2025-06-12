@@ -1,0 +1,27 @@
+{
+  falcon-sensor-unwrapped,
+  buildFHSEnv,
+  symlinkJoin,
+  ...
+}: let
+  falconFHSWrapper = mainProgram: buildFHSEnv {
+    name = mainProgram;
+    targetPkgs = pkgs: with pkgs; [libnl openssl];
+    runScript = "${falcon-sensor-unwrapped}/opt/CrowdStrike/${mainProgram}";
+  };
+
+  falconctl = falconFHSWrapper "falconctl";
+
+  falcond = falconFHSWrapper "falcond";
+
+  falcon-kernel-check = falconFHSWrapper "falcon-kernel-check";
+
+  in
+  symlinkJoin {
+    name = "falcon-sensor";
+    paths = [
+      falconctl
+      falcond
+      falcon-kernel-check
+    ];
+  }
