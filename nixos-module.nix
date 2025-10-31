@@ -16,6 +16,10 @@ in {
         type = types.nullOr types.raw;
         description = "falcon-sensor has a whitelist of supported kernels. This option sets the linux kernel.";
       };
+      cid = mkOption {
+        type = types.str;
+        description = "Customer ID (CID) for your Crowdstrike Falcon Sensor.";
+      };
     };
   };
 
@@ -63,7 +67,7 @@ in {
                     ln -sf ${pkgs.falcon-sensor-unwrapped}/opt/CrowdStrike/* /opt/CrowdStrike/
                     /run/current-system/sw/bin/falconctl -s --trace=debug
                     # Replace <cid> with your CID
-                    /run/current-system/sw/bin/falconctl -s --cid=<cid> -f
+                    /run/current-system/sw/bin/falconctl -s --cid="${cfg.cid}" -f
                     /run/current-system/sw/bin/falconctl -g --cid
                   '')
               ];

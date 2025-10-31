@@ -18,7 +18,8 @@
 
   in
   symlinkJoin {
-    name = "falcon-sensor";
+    pname = "falcon-sensor";
+    version = falcon-sensor-unwrapped.version;
     paths = [
       falconctl
       falcond

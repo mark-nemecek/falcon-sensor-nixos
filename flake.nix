@@ -38,8 +38,8 @@
 
     checks.${system}.default = module-test;
 
-    overlays.default = import ./overlay.nix self;
+    overlays.default = import ./overlay.nix;
 
-    nixosModules.default = import ./module.nix {falcon-sensor-overlay = self.overlays.default;};
+    nixosModules.default = import ./nixos-module.nix {falcon-sensor-overlay = self.overlays.default;};
   };
 }

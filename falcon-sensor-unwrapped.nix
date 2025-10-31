@@ -8,11 +8,28 @@
   libnl,
   ...
 }:
-stdenv.mkDerivation {
-  name = "falcon-sensor-unwrapped";
-  version = "<version>";
+
+let
+  # Run a command and capture its output as a string (by writing output to the nix store and reading it back)
+  runCommandString = command:
+    let
+      outputDerivation = stdenv.mkDerivation {
+        name = "run-command-string";
+        buildCommand = ''
+          { ${command} } > "$out"
+        '';
+      };
+    in
+    builtins.readFile outputDerivation;
+in
+
+stdenv.mkDerivation rec {
+  pname = "falcon-sensor-unwrapped";
+  version = runCommandString ''
+    ${dpkg}/bin/dpkg-deb -f ${src} version | tr -d "\n"
+  '';
   arch = "x86_64-linux";
-  src = ./falcon-sensor_<version>.deb;
+  src = ./falcon-sensor_7.30.0-18306_amd64.deb;
 
   nativeBuildInputs = [
     autoPatchelfHook

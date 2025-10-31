@@ -1,5 +1,7 @@
-falcon-sensor-module: {nixosTest}:
-nixosTest {
+falcon-sensor-module: {
+  testers
+}:
+testers.nixosTest {
   name = "falcon-sensor-module-nixosTest";
   nodes.machine = {pkgs, ...}: {
     imports = [falcon-sensor-module];

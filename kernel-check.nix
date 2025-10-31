@@ -1,6 +1,6 @@
 # A simple test to quickly check kernel compatibility
-{nixosTest}:
-nixosTest {
+{testers}:
+testers.nixosTest {
   name = "falcon-sensor-kernel-check";
   nodes.machine = {pkgs, ...}: {
     environment.systemPackages = [
