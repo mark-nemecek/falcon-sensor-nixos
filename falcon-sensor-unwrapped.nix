@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
     ${dpkg}/bin/dpkg-deb -f ${src} version | tr -d "\n"
   '';
   arch = "x86_64-linux";
-  src = ./falcon-sensor_7.30.0-18306_amd64.deb;
+  src = ./falcon-sensor_7.33.0-18606_amd64.deb;
 
   nativeBuildInputs = [
     autoPatchelfHook
